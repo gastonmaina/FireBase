@@ -1,3 +1,7 @@
+body{
+    background-color:lightcyan;
+}
+
 #pendings li{
     list-style: none;
     display: inline-block;
@@ -6,4 +10,13 @@
     background-color: aquamarine;
     text-align: center;
     flex-grow: 1;
+}
+
+.imagen{
+    min-height: 40vh;
+    width: 100%;
+    background-image: url("./assets/postit.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-bottom: 15px;
 }

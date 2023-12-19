@@ -18,24 +18,18 @@ btnAgregar$.addEventListener("click", function(){
 })
 
 onValue(toDoListinDB, function(snapshot){
-    
-    console.log(snapshot.exist)
     if(snapshot.exists()){
-        let datosInDB = Object.entries(snapshot.val())
-        
-        pendings$.innerHTML = ""
-    
+        let datosInDB = Object.entries(snapshot.val())        
+        pendings$.innerHTML = ""    
         for(let i=0; i<datosInDB.length; i++){
             addItemToList(datosInDB[i])
         }
-    }else{
-        pendings$.innerHTML = "no hay elementos pendientes"
-    }
+    }else pendings$.innerHTML = "No hay elementos pendientes..."
+    
 
 })
 
-function addItemToList(datos){
-    
+function addItemToList(datos){    
     let newItem$ = document.createElement("li")
     newItem$.innerText = datos[1]
     newItem$.setAttribute("id", datos[0])
