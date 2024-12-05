@@ -1,3 +1,7 @@
+body{
+    background-color: white;
+}
+
 #pendings li{
     list-style: none;
     display: inline-block;
