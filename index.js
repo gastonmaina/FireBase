@@ -10,34 +10,45 @@ const database = getDatabase(app)
 const toDoListinDB = ref(database, "PendingsList")
 
 const btnAgregar$ = document.getElementById("btnAgregar")
-const userNeeds$ = document.getElementById("userNeeds") 
+const ut$ = document.getElementById("ut") 
+const tipo$ = document.getElementById("tipo") 
+const detalle$ = document.getElementById("detalle") 
 const pendings$ = document.getElementById("pendings")
 
 btnAgregar$.addEventListener("click", function(){
-    push(toDoListinDB, userNeeds$.value)
-    userNeeds$.value=""
+    let datos = {
+        "UT": ut$.value,
+        "TIPO": tipo$.value,
+        "DETALLE": detalle$.value.toUpperCase()
+    }
+    push(toDoListinDB, datos)
+    ut$.value=""
+    tipo$.value=""
+    detalle$.value=""
 })
 
-onValue(toDoListinDB, function(snapshot){
-    if(snapshot.exists()){
-        let datosInDB = Object.entries(snapshot.val())        
-        pendings$.innerHTML = ""    
-        for(let i=0; i<datosInDB.length; i++){
-            addItemToList(datosInDB[i])
-        }
-    }else pendings$.innerHTML = "No hay elementos pendientes..."
+// onValue(toDoListinDB, function(snapshot){
+//     if(snapshot.exists()){
+//         let datosInDB = Object.entries(snapshot.val())    
+//         console.log(datosInDB)    
+//         pendings$.innerHTML = ""    
+//         for(let i=0; i<datosInDB.length; i++){
+//             console.log(datosInDB[i][1].detalle)
+//             addItemToList(datosInDB[i][1].detalle)
+//         }
+//     }else pendings$.innerHTML = "No hay elementos pendientes..."
     
 
-})
+// })
 
-function addItemToList(datos){    
-    let newItem$ = document.createElement("li")
-    newItem$.innerText = datos[1]
-    newItem$.setAttribute("id", datos[0])
-    newItem$.addEventListener("click", function(){
-        let exactLocation = ref(database, `PendingsList/${newItem$.id}`)
-        console.log(newItem$.id)
-        remove(exactLocation)
-    })
-    pendings$.append(newItem$)
-}
+// function addItemToList(datos){    
+//     let newItem$ = document.createElement("li")
+//     newItem$.innerText = datos
+//     newItem$.setAttribute("id", datos)
+//     newItem$.addEventListener("click", function(){
+//         let exactLocation = ref(database, `PendingsList/${newItem$.id}`)
+//         console.log(newItem$.id)
+//         remove(exactLocation)
+//     })
+//     pendings$.append(newItem$)
+// }
