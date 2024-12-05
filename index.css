@@ -1,7 +1,3 @@
-body{
-    background-color:grey;
-}
-
 #pendings li{
     list-style: none;
     display: inline-block;
@@ -13,9 +9,9 @@ body{
 }
 
 .imagen{
-    min-height: 40vh;
-    width: 100%;
-    background-image: url("./assets/postit.jpg");
+    min-height: 10vh;
+    width: 10%;
+    background-image: url("./assets/biomas.png");
     background-repeat: no-repeat;
     background-size: cover;
     margin-bottom: 15px;
