@@ -1,5 +1,10 @@
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js'
+import { getDatabase, ref, push, onValue, remove } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js';
+
+
 export default {
-    "nombreBaseDeDatos": "PendingsList",
-    "ruta1": "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js"
-    "ruta2": "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js"
+    initializeApp,
+    getDatabase, ref, push, onValue, remove,
+    databaseURL: "https://hannitahotel-default-rtdb.firebaseio.com/",
+    nombreBaseDeDatos: "PendingsList"
 }
