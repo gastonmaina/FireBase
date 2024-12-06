@@ -1,15 +1,12 @@
-import configuration from "./config.js";
+import config from '../config.js'
 
-import { initializeApp } from configuration.ruta1;
-import { getDatabase, ref, push, onValue, remove } from `${configuration.ruta2}`;
 
 const appSetting = {
-    // databaseURL: "https://todoapp-278d1-default-rtdb.firebaseio.com/"
-    databaseURL: `${configuration.nombreBaseDeDatos}`
+    databaseURL: config.databaseURL
 }
-const app = initializeApp(appSetting)
-const database = getDatabase(app) 
-const toDoListinDB = ref(database, "PendingsList")
+const app = config.initializeApp(appSetting)
+const database = config.getDatabase(app) 
+const toDoListinDB = config.ref(database, `${config.nombreBaseDeDatos}`)
 
 const btnAgregar$ = document.getElementById("btnAgregar")
 const ut$ = document.getElementById("ut") 
@@ -23,11 +20,15 @@ btnAgregar$.addEventListener("click", function(){
         "TIPO": tipo$.value,
         "DETALLE": detalle$.value.toUpperCase()
     }
-    push(toDoListinDB, datos)
+    config.push(toDoListinDB, datos)
     ut$.value=""
     tipo$.value=""
     detalle$.value=""
 })
+
+const tipo$ = document.getElementById("tipo") 
+const detalle$ = document.getElementById("detalle") 
+const pendings$ = document.getElementById("pendings")
 
 // onValue(toDoListinDB, function(snapshot){
 //     if(snapshot.exists()){
