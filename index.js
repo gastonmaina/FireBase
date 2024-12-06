@@ -1,9 +1,11 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js'
-import { getDatabase, ref, push, onValue, remove } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js'
+import configuration from "./config.js"
+
+import { initializeApp } from `${configuration.ruta1}` 
+import { getDatabase, ref, push, onValue, remove } from `${configuration.ruta2}`
 
 const appSetting = {
     // databaseURL: "https://todoapp-278d1-default-rtdb.firebaseio.com/"
-    databaseURL: "https://hannitahotel-default-rtdb.firebaseio.com/"
+    databaseURL: `${configuration.nombreBaseDeDatos}`
 }
 const app = initializeApp(appSetting)
 const database = getDatabase(app) 
