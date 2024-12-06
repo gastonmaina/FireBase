@@ -26,10 +26,6 @@ btnAgregar$.addEventListener("click", function(){
     detalle$.value=""
 })
 
-const tipo$ = document.getElementById("tipo") 
-const detalle$ = document.getElementById("detalle") 
-const pendings$ = document.getElementById("pendings")
-
 // onValue(toDoListinDB, function(snapshot){
 //     if(snapshot.exists()){
 //         let datosInDB = Object.entries(snapshot.val())    
