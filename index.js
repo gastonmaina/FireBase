@@ -21,6 +21,9 @@ btnAgregar$.addEventListener("click", function(){
         "DETALLE": detalle$.value.toUpperCase(),
         "FECHA": fecha$.value
     }
+
+    console.log(fecha$.value)
+    console.dir(fecha$)
     config.push(toDoListinDB, datos)
     ut$.value=""
     tipo$.value=""
