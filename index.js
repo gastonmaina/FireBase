@@ -12,18 +12,20 @@ const btnAgregar$ = document.getElementById("btnAgregar")
 const ut$ = document.getElementById("ut") 
 const tipo$ = document.getElementById("tipo") 
 const detalle$ = document.getElementById("detalle") 
-const pendings$ = document.getElementById("pendings")
+const fecha$ = document.getElementById("fecha")
 
 btnAgregar$.addEventListener("click", function(){
     let datos = {
         "UT": ut$.value,
         "TIPO": tipo$.value,
-        "DETALLE": detalle$.value.toUpperCase()
+        "DETALLE": detalle$.value.toUpperCase(),
+        "FECHA": fecha$.value
     }
     config.push(toDoListinDB, datos)
     ut$.value=""
     tipo$.value=""
     detalle$.value=""
+    fecha.value="";
 })
 
 // onValue(toDoListinDB, function(snapshot){
