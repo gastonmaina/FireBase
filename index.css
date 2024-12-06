@@ -13,8 +13,8 @@ body{
 }
 
 #logo{
-    min-height: 10vh;
-    width: 10%;
+    min-height: 70px;
+    width: 70px;
     background-image: url("./assets/biomas.png");
     background-repeat: no-repeat;
     background-size: cover;
