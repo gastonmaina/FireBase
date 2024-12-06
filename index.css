@@ -1,11 +1,11 @@
 body{
-    background-color: black;
+    background-color: grey;
     color: white;
 }
 
 .fondo{
-     background-color: black;
-    color: white;
+     background-color: grey;
+     color: white;
 }
 
 #pendings li{
