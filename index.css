@@ -12,7 +12,7 @@ body{
     flex-grow: 1;
 }
 
-.imagen{
+#logo{
     min-height: 10vh;
     width: 10%;
     background-image: url("./assets/biomas.png");
