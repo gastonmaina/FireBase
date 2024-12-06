@@ -1,6 +1,6 @@
 import configuration from "./config.js";
 
-import { initializeApp } from `${configuration.ruta1}`;
+import { initializeApp } from configuration.ruta1;
 import { getDatabase, ref, push, onValue, remove } from `${configuration.ruta2}`;
 
 const appSetting = {
