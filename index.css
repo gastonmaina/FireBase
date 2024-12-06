@@ -1,5 +1,10 @@
-body, .fondo{
+body{
     background-color: black;
+    color: white;
+}
+
+.fondo{
+     background-color: black;
     color: white;
 }
 
