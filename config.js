@@ -6,5 +6,6 @@ export default {
     initializeApp,
     getDatabase, ref, push, onValue, remove,
     databaseURL: "https://hannitahotel-default-rtdb.firebaseio.com/",
-    nombreBaseDeDatos: "PendingsList"
+    nombreBaseDeDatos: "PendingsList",
+    gmaina: "1234"
 }

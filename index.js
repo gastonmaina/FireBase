@@ -1,6 +1,5 @@
 import config from '../config.js'
 
-
 const appSetting = {
     databaseURL: config.databaseURL
 }
@@ -9,27 +8,55 @@ const database = config.getDatabase(app)
 const toDoListinDB = config.ref(database, `${config.nombreBaseDeDatos}`)
 
 const btnAgregar$ = document.getElementById("btnAgregar")
+const btnCancelar$ = document.getElementById("btnCancelar")
 const ut$ = document.getElementById("ut") 
 const tipo$ = document.getElementById("tipo") 
 const detalle$ = document.getElementById("detalle") 
 const fecha$ = document.getElementById("fecha")
+const btnpass$ = document.getElementById("btnPass")
+const modalLogin$ = document.getElementById("modalLogin")
+const body$ = document.getElementsByName("body")
+
 
 btnAgregar$.addEventListener("click", function(){
+    const fechaActual = new Date(); 
+    const dia = fechaActual.getDate(); 
+    const mes = fechaActual.getMonth() + 1;  
+    const anio = fechaActual.getFullYear(); 
+    const fechaFormateada = `${anio}-${mes}-${dia}`    
     let datos = {
         "UT": ut$.value,
         "TIPO": tipo$.value,
         "DETALLE": detalle$.value.toUpperCase(),
-        "FECHA": fecha$.value
+        "FECHA_SOLICITADA": fecha$.value,
+        "FECHA_GENERADA": fechaFormateada,
+        "ESTADO": "SIN TRATAMIENTO", //hace referecia a si esta sin tratamiento, asignada o cerrada
+        "PLANIFICADOR": "", //hace referencia al jefe de turno que asigna la tarea
+        "COMENTARIOS_PLANIFICADOR": "",
+        "FECHA_PLANIFICADOR": "",
+        "ASIGNADO": "",
+        "COMENTARIOS_ASIGNADO":"",
+        "FECHA_ASIGNADO":"" //HACE REFERENCIA A LA FECHA DE CIERRE
     }
 
-    console.log(fecha$.value)
-    console.dir(fecha$)
     config.push(toDoListinDB, datos)
+    limpiarCampos()
+})
+
+btnCancelar$.addEventListener("click", ()=>{
+    window.close()
+})
+
+btnpass$.addEventListener('click', ()=>{
+    modalLogin$.classList.add("noActive")
+})
+
+function limpiarCampos() {
     ut$.value=""
     tipo$.value=""
     detalle$.value=""
-    fecha.value="";
-})
+    fecha$.value="";
+}
 
 // onValue(toDoListinDB, function(snapshot){
 //     if(snapshot.exists()){
