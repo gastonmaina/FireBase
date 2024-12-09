@@ -58,16 +58,17 @@ function limpiarCampos() {
     fecha$.value="";
 }
 
-// onValue(toDoListinDB, function(snapshot){
-//     if(snapshot.exists()){
-//         let datosInDB = Object.entries(snapshot.val())    
-//         console.log(datosInDB)    
-//         pendings$.innerHTML = ""    
-//         for(let i=0; i<datosInDB.length; i++){
-//             console.log(datosInDB[i][1].detalle)
-//             addItemToList(datosInDB[i][1].detalle)
-//         }
-//     }else pendings$.innerHTML = "No hay elementos pendientes..."
+config.onValue(toDoListinDB, function(snapshot){
+    if(snapshot.exists()){
+        let datosInDB = Object.entries(snapshot.val())    
+        console.log(datosInDB)    
+        // pendings$.innerHTML = ""    
+        // for(let i=0; i<datosInDB.length; i++){
+        //     console.log(datosInDB[i][1].detalle)
+        //     addItemToList(datosInDB[i][1].detalle)
+        // }
+    }
+    // else pendings$.innerHTML = "No hay elementos pendientes..."
     
 
 // })
