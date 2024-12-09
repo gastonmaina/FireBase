@@ -36,7 +36,8 @@ btnAgregar$.addEventListener("click", function(){
         "FECHA_PLANIFICADOR": "",
         "ASIGNADO": "",
         "COMENTARIOS_ASIGNADO":"",
-        "FECHA_ASIGNADO":"" //HACE REFERENCIA A LA FECHA DE CIERRE
+        "FECHA_ASIGNADO":"", //HACE REFERENCIA A LA FECHA DE CIERRE
+        "ID": Date.now()
     }
 
     config.push(toDoListinDB, datos)
