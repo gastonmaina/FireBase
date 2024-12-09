@@ -69,9 +69,7 @@ config.onValue(toDoListinDB, function(snapshot){
         // }
     }
     // else pendings$.innerHTML = "No hay elementos pendientes..."
-    
-
-// })
+    })
 
 // function addItemToList(datos){    
 //     let newItem$ = document.createElement("li")
