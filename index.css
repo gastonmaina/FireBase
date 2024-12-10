@@ -1,9 +1,9 @@
 .main{
-    height: 100vh;
+    height: 90vh;
     width: 100vw;
     position: absolute;
     z-index: 1;
-    top: 0;
+    top: 0vh;
     left: 0;
     background-color: black;
 }
