@@ -23,7 +23,7 @@ const especialidad$ = document.getElementById("especialidad")
 const repetitividad$ = document.getElementById("repetitividad")
 const labelRepetitividad$ = document.getElementById("labelRepetitividad")
 const usuarioActivo$ = document.getElementById("usuarioActivo")
-const fecha_inicio$ = document.getElementById("fecha_inicio")
+// const fecha_inicio$ = document.getElementById("fecha_inicio")
 const fecha_fin$ = document.getElementById("fecha_fin")
 
 
@@ -172,7 +172,7 @@ function limpiarCampos() {
     detalle$.value=""
     fecha$.value="";
     especialidad$.value=""
-    repetitividad$,value=""
+    repetitividad$.value=""
 }
 
 config.onValue(toDoListinDB, function(snapshot){
