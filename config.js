@@ -11,6 +11,6 @@ export default {
     remove, 
     update,
     databaseURL: "https://hannitahotel-default-rtdb.firebaseio.com/",
-    nombreBaseDeDatos: "PendingsList",
+    nombreBaseDeDatos: "PendingsList1",
     gmaina: "1234"
 }
