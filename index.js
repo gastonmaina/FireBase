@@ -15,18 +15,18 @@ const btnpass$ = document.getElementById("btnPass")
 const modalLogin$ = document.getElementById("modalLogin")
 const body$ = document.getElementsByName("body")
 
-const email = "gmaina@biomas.net";
-const password = "180301";
+// const email = "gmaina@biomas.net";
+// const password = "180301";
 
-config.auth().signInWithEmailAndPassword(email, password)
-  .then((userCredential) => {
-    // Usuario autenticado
-    const user = userCredential.user;
-    console.log("Usuario autenticado:", user);
-  })
-  .catch((error) => {
-    console.error("Error en la autenticación:", error);
-  });
+// config.auth().signInWithEmailAndPassword(email, password)
+//   .then((userCredential) => {
+//     // Usuario autenticado
+//     const user = userCredential.user;
+//     console.log("Usuario autenticado:", user);
+//   })
+//   .catch((error) => {
+//     console.error("Error en la autenticación:", error);
+//   });
 
 
 btnAgregar$.addEventListener("click", function(){
