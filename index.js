@@ -58,7 +58,23 @@ async function actualizar(datos){
 
 btnCancelar$.addEventListener("click", ()=>{
     //window.close()
-    config.update('-ODlI4VA0m_nsnJb6W3v/ASIGNADO' = "HOLA")
+    // Referencia al nodo específico que deseas actualizar
+const pendingRef = database.ref('PendingsList1/-ODlI4V9pHuSSYDooBT9');
+
+// Datos que deseas actualizar
+const updates = {
+  ASIGNADO: "Juan Perez",
+  COMENTARIOS_ASIGNADO: "Revisar urgentemente"
+};
+
+// Actualiza los datos
+pendingRef.update(updates)
+  .then(() => {
+    console.log("Datos actualizados correctamente.");
+  })
+  .catch((error) => {
+    console.error("Error al actualizar los datos: ", error);
+  });
 })
 
 btnpass$.addEventListener('click', ()=>{
