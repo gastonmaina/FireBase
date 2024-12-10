@@ -38,58 +38,24 @@ btnAgregar$.addEventListener("click", function(){
         "COMENTARIOS_ASIGNADO":"",
         "FECHA_ASIGNADO":"", //HACE REFERENCIA A LA FECHA DE CIERRE
         "ID": Date.now()
-    }
-
-    let info = {
-        {
-         "UT": ut$.value,
-        "TIPO": tipo$.value,
-        "DETALLE": detalle$.value.toUpperCase(),
-        "FECHA_SOLICITADA": fecha$.value,
-        "FECHA_GENERADA": fechaFormateada,
-        "ESTADO": "SIN TRATAMIENTO", //hace referecia a si esta sin tratamiento, asignada o cerrada
-        "PLANIFICADOR": "", //hace referencia al jefe de turno que asigna la tarea
-        "COMENTARIOS_PLANIFICADOR": "",
-        "FECHA_PLANIFICADOR": "",
-        "ASIGNADO": "",
-        "COMENTARIOS_ASIGNADO":"",
-        "FECHA_ASIGNADO":"", //HACE REFERENCIA A LA FECHA DE CIERRE
-        "ID": Date.now()
-        },
-        {
-             "UT": ut$.value,
-        "TIPO": tipo$.value,
-        "DETALLE": detalle$.value.toUpperCase(),
-        "FECHA_SOLICITADA": fecha$.value,
-        "FECHA_GENERADA": fechaFormateada,
-        "ESTADO": "SIN TRATAMIENTO", //hace referecia a si esta sin tratamiento, asignada o cerrada
-        "PLANIFICADOR": "", //hace referencia al jefe de turno que asigna la tarea
-        "COMENTARIOS_PLANIFICADOR": "",
-        "FECHA_PLANIFICADOR": "",
-        "ASIGNADO": "",
-        "COMENTARIOS_ASIGNADO":"",
-        "FECHA_ASIGNADO":"", //HACE REFERENCIA A LA FECHA DE CIERRE
-        "ID": Date.now()
-        },
-        {
-             "UT": ut$.value,
-        "TIPO": tipo$.value,
-        "DETALLE": detalle$.value.toUpperCase(),
-        "FECHA_SOLICITADA": fecha$.value,
-        "FECHA_GENERADA": fechaFormateada,
-        "ESTADO": "SIN TRATAMIENTO", //hace referecia a si esta sin tratamiento, asignada o cerrada
-        "PLANIFICADOR": "", //hace referencia al jefe de turno que asigna la tarea
-        "COMENTARIOS_PLANIFICADOR": "",
-        "FECHA_PLANIFICADOR": "",
-        "ASIGNADO": "",
-        "COMENTARIOS_ASIGNADO":"",
-        "FECHA_ASIGNADO":"", //HACE REFERENCIA A LA FECHA DE CIERRE
-        "ID": Date.now()
-        }
-    }
+    }    
     
-    //config.push(toDoListinDB, datos)
-    config.update(toDoListinDB, info)
+    config.push(toDoListinDB, datos)
+    config.push(toDoListinDB, datos)
+    config.push(toDoListinDB, datos)
+    config.push(toDoListinDB, datos)
+    config.push(toDoListinDB, datos)
+    config.push(toDoListinDB, datos)
+    config.push(toDoListinDB, datos)
+    config.push(toDoListinDB, datos)
+    config.push(toDoListinDB, datos)
+    config.push(toDoListinDB, datos)
+    config.push(toDoListinDB, datos)
+    config.push(toDoListinDB, datos)
+    config.push(toDoListinDB, datos)
+    config.push(toDoListinDB, datos)
+    config.push(toDoListinDB, datos)
+    
     limpiarCampos()
 })
 
