@@ -62,7 +62,7 @@ btnCancelar$.addEventListener("click", ()=>{
 const pendingRef = config.ref('PendingsList1/-ODlI4V9pHuSSYDooBT9');
 
 // Datos que deseas actualizar
-const config.updates = {
+const updates = {
   ASIGNADO: "Juan Perez",
   COMENTARIOS_ASIGNADO: "Revisar urgentemente"
 };
