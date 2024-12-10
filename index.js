@@ -59,10 +59,10 @@ async function actualizar(datos){
 btnCancelar$.addEventListener("click", ()=>{
     //window.close()
     // Referencia al nodo específico que deseas actualizar
-const pendingRef = database.ref('PendingsList1/-ODlI4V9pHuSSYDooBT9');
+const pendingRef = config.ref('PendingsList1/-ODlI4V9pHuSSYDooBT9');
 
 // Datos que deseas actualizar
-const updates = {
+const config.updates = {
   ASIGNADO: "Juan Perez",
   COMENTARIOS_ASIGNADO: "Revisar urgentemente"
 };
