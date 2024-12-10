@@ -10,7 +10,7 @@ export default {
     onValue, 
     remove, 
     update,
-    databaseURL: "https://otmanagment-c3c12-default-rtdb.firebaseio.com/" //"https://hannitahotel-default-rtdb.firebaseio.com/",
+    databaseURL: "https://otmanagment-c3c12-default-rtdb.firebaseio.com/", //"https://hannitahotel-default-rtdb.firebaseio.com/",
     nombreBaseDeDatos: "OT",
     gmaina: "1234"
 }
