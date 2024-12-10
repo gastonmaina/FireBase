@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js'
-import { getDatabase, ref, push, onValue, remove, update } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js';
+import { getDatabase, ref, push, onValue, remove, update, auth } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAKOXVaphyQrHW9vrMf-9PKRHfPCqr2-8M",
@@ -19,6 +19,7 @@ export default {
     onValue, 
     remove, 
     update,
+    auth,
     firebaseConfig,
     nombreBaseDeDatos: "OT",
     gmaina: "1234"
