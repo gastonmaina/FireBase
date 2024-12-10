@@ -1,4 +1,4 @@
-import config from '../config.js'
+import config from './config.js'
 
 const appSetting = config.firebaseConfig
 const app = config.initializeApp(appSetting)
