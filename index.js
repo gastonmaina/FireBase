@@ -59,7 +59,7 @@ async function actualizar(datos){
 btnCancelar$.addEventListener("click", ()=>{
     //window.close()
     // Referencia al nodo específico que deseas actualizar
-const pendingRef = config.ref('PendingsList1/-ODlI4V9pHuSSYDooBT9');
+    let toDoListinDBelemento = config.ref(database, `${config.nombreBaseDeDatos/PendingsList1/-ODlI4V9pHuSSYDooBT9}`)
 
 // Datos que deseas actualizar
 const updates = {
@@ -68,7 +68,7 @@ const updates = {
 };
 
 // Actualiza los datos
-pendingRef.update(updates)
+config.update(toDoListinDBelemento, updates)
   .then(() => {
     console.log("Datos actualizados correctamente.");
   })
