@@ -1,6 +1,10 @@
-import config from './config.js'
+import config from '../config.js'
 
-const appSetting = config.firebaseConfig
+let activeUser=""
+
+const appSetting = {
+    databaseURL: config.databaseURL
+}
 const app = config.initializeApp(appSetting)
 const database = config.getDatabase(app) 
 const toDoListinDB = config.ref(database, `${config.nombreBaseDeDatos}`)
@@ -12,29 +16,39 @@ const tipo$ = document.getElementById("tipo")
 const detalle$ = document.getElementById("detalle") 
 const fecha$ = document.getElementById("fecha")
 const btnpass$ = document.getElementById("btnPass")
+const user$ = document.getElementById("user")
+const pass$ = document.getElementById("pass")
 const modalLogin$ = document.getElementById("modalLogin")
-const body$ = document.getElementsByName("body")
+const especialidad$ = document.getElementById("especialidad")
+const repetitividad$ = document.getElementById("repetitividad")
+const labelRepetitividad$ = document.getElementById("labelRepetitividad")
+const usuarioActivo$ = document.getElementById("usuarioActivo")
+const fecha_inicio$ = document.getElementById("fecha_inicio")
+const fecha_fin$ = document.getElementById("fecha_fin")
 
-// const email = "gmaina@biomas.net";
-// const password = "180301";
 
-// config.auth().signInWithEmailAndPassword(email, password)
-//   .then((userCredential) => {
-//     // Usuario autenticado
-//     const user = userCredential.user;
-//     console.log("Usuario autenticado:", user);
-//   })
-//   .catch((error) => {
-//     console.error("Error en la autenticación:", error);
-//   });
-
+tipo$.addEventListener("change", function(){
+    if(tipo$.value=="PREVENTIVO") 
+    {
+        labelRepetitividad$.classList.remove(['tachar'])
+        repetitividad$.removeAttribute('disabled')
+    }
+        else{
+        repetitividad$.value = "CORRECTIVO"
+        labelRepetitividad$.classList.add(['tachar'])
+        repetitividad$.setAttribute('disabled', 'disabled')
+} 
+        
+})
 
 btnAgregar$.addEventListener("click", function(){
+
     const fechaActual = new Date(); 
     const dia = fechaActual.getDate(); 
     const mes = fechaActual.getMonth() + 1;  
     const anio = fechaActual.getFullYear(); 
     const fechaFormateada = `${anio}-${mes}-${dia}`    
+
     let datos = {
         "UT": ut$.value,
         "TIPO": tipo$.value,
@@ -48,29 +62,69 @@ btnAgregar$.addEventListener("click", function(){
         "ASIGNADO": "",
         "COMENTARIOS_ASIGNADO":"",
         "FECHA_ASIGNADO":"", //HACE REFERENCIA A LA FECHA DE CIERRE
-        "ID": Date.now()
-    }    
-    
-    //config.push(toDoListinDB, datos)
-    for(let i=0; i<100; i++){
-        actualizar(datos);
+        "ID": Date.now(),
+        "USUARIO_GENERADOR": activeUser,
+        "ESPECIALIDAD": especialidad$.value,
+        "REPETITIVIDAD": {}
     }
 
-  
-    
-    limpiarCampos()
-  
-    
+    if(ut$.value !="" && especialidad$.value !="" && tipo$.value !="" && detalle$.value !="" && fecha$.value !=""){
+        if(tipo$.value === "CORRECTIVO"){
+            datos.REPETITIVIDAD = {
+                "FRECUENCIA":"",
+                "FECHA_INICIO": "",
+                "FECHA_FIN": ""
+            }
+        }
+        else
+            {
+                if(repetitividad$.value != ""){
+                switch (repetitividad$.value) {
+                    case "SEMANAL": datos.REPETITIVIDAD = {
+                        "FRECUENCIA": "SEMANAL"
+                    }                        
+                    break;
+                    
+                    case "QUINCENAL": datos.REPETITIVIDAD = {
+                        "FRECUENCIA": "QUINCENAL"
+                    }
+                    break;
+
+                    case "MENSUAL": datos.REPETITIVIDAD = {
+                        "FRECUENCIA": "MENSUAL"
+                    }
+                    break
+
+                    case "TRIMESTRAL": datos.REPETITIVIDAD = {
+                        "FRECUENCIA": "TRIMESTRAL"
+                    }
+                    break
+
+                    case "SEMESTRAL": datos.REPETITIVIDAD = {
+                        "FRECUENCIA": "SEMESTRAL"
+                    }
+                    break
+
+                    case "ANUAL": datos.REPETITIVIDAD = {
+                        "FRECUENCIA": "ANUAL"
+                    }
+                    break
+
+                    default:
+                        break;
+                }
+
+            }
+        }
+        config.push(toDoListinDB, datos)
+        
+        limpiarCampos()
+    }
 })
 
-async function actualizar(datos){
-    await config.push(toDoListinDB, datos)
-}
-
 btnCancelar$.addEventListener("click", ()=>{
-    //window.close()
-    // Referencia al nodo específico que deseas actualizar
-    let toDoListinDBelemento = config.ref(database, `${config.nombreBaseDeDatos}/-ODlI4V9pHuSSYDooBT9`)
+    // window.close()
+    let toDoListinDBelemento = config.ref(database, `${config.nombreBaseDeDatos}/-ODmZSMuK2SzI14K-wOd`)
 
 // Datos que deseas actualizar
 const updates = {
@@ -89,7 +143,27 @@ config.update(toDoListinDBelemento, updates)
 })
 
 btnpass$.addEventListener('click', ()=>{
-    modalLogin$.classList.add("noActive")
+    if(config.usuarios[`${user$.value}`]){
+        if(config.usuarios[`${user$.value}`].password === pass$.value){
+            console.log(config.usuarios[`${user$.value}`])
+            activeUser=user$.value;
+            usuarioActivo$.innerHTML = `USUARI@: ${activeUser} - PERFIL DE ACCESO: ${config.usuarios[`${user$.value}`].rol.toUpperCase()} `
+            modalLogin$.classList.add("noActive")
+        }else{
+            user$.value=""
+            pass$.value=""
+        }
+    }
+    else{
+        user$.value=""
+        pass$.value=""
+    }
+    
+    
+
+
+
+
 })
 
 function limpiarCampos() {
@@ -97,6 +171,8 @@ function limpiarCampos() {
     tipo$.value=""
     detalle$.value=""
     fecha$.value="";
+    especialidad$.value=""
+    repetitividad$,value=""
 }
 
 config.onValue(toDoListinDB, function(snapshot){
@@ -111,15 +187,3 @@ config.onValue(toDoListinDB, function(snapshot){
     }
     // else pendings$.innerHTML = "No hay elementos pendientes..."
     })
-
-// function addItemToList(datos){    
-//     let newItem$ = document.createElement("li")
-//     newItem$.innerText = datos
-//     newItem$.setAttribute("id", datos)
-//     newItem$.addEventListener("click", function(){
-//         let exactLocation = ref(database, `PendingsList/${newItem$.id}`)
-//         console.log(newItem$.id)
-//         remove(exactLocation)
-//     })
-//     pendings$.append(newItem$)
-// }

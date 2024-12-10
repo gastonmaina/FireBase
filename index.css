@@ -51,3 +51,9 @@
 .noActive{
     z-index: -1000;
 }
+
+.tachar{
+    text-decoration: line-through;
+    color: yellow;
+    font-weight: bold;
+}
