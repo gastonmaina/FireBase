@@ -1,8 +1,6 @@
 import config from '../config.js'
 
-const appSetting = {
-    databaseURL: config.databaseURL
-}
+const appSetting = config.firebaseConfig
 const app = config.initializeApp(appSetting)
 const database = config.getDatabase(app) 
 const toDoListinDB = config.ref(database, `${config.nombreBaseDeDatos}`)
