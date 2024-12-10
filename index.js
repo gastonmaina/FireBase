@@ -45,7 +45,7 @@ btnAgregar$.addEventListener("click", function(){
         datos,
         datos,
         datos
-    }
+    })
     limpiarCampos()
 })
 
