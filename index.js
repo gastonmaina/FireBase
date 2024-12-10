@@ -58,7 +58,7 @@ async function actualizar(datos){
 
 btnCancelar$.addEventListener("click", ()=>{
     //window.close()
-    config.update(['-ODlI4VA0m_nsnJb6W3v/ASIGNADO'] = "HOLA")
+    config.update('-ODlI4VA0m_nsnJb6W3v/ASIGNADO' = "HOLA")
 })
 
 btnpass$.addEventListener('click', ()=>{
