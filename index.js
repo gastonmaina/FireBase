@@ -24,6 +24,7 @@ const repetitividad$ = document.getElementById("repetitividad")
 const labelRepetitividad$ = document.getElementById("labelRepetitividad")
 const usuarioActivo$ = document.getElementById("usuarioActivo")
 // const fecha_inicio$ = document.getElementById("fecha_inicio")
+const labelFechaFin$ = document.getElementById("labelFechaFin")
 const fecha_fin$ = document.getElementById("fecha_fin")
 
 
@@ -32,11 +33,15 @@ tipo$.addEventListener("change", function(){
     {
         labelRepetitividad$.classList.remove(['tachar'])
         repetitividad$.removeAttribute('disabled')
+        labelFechaFin$.classList.remove(['tachar'])
+        fecha_fin$.removeAttribute('disabled')
     }
         else{
         repetitividad$.value = "CORRECTIVO"
         labelRepetitividad$.classList.add(['tachar'])
         repetitividad$.setAttribute('disabled', 'disabled')
+        labelFechaFin$.classList.add(['tachar'])
+        fecha_fin$.setAttribute('disabled', 'disabled')
 } 
         
 })
