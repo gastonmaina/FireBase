@@ -40,7 +40,12 @@ btnAgregar$.addEventListener("click", function(){
         "ID": Date.now()
     }
 
-    config.push(toDoListinDB, datos)
+    //config.push(toDoListinDB, datos)
+    config.update(toDoListinDB, {
+        datos,
+        datos,
+        datos
+    }
     limpiarCampos()
 })
 
