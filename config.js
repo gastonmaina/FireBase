@@ -1,4 +1,4 @@
-import { initializeApp, firebase } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js'
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js'
 import { getDatabase, ref, push, onValue, remove, update } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js';
 
 
@@ -10,7 +10,6 @@ export default {
     onValue, 
     remove, 
     update,
-    firebase,
     databaseURL: "https://hannitahotel-default-rtdb.firebaseio.com/",
     nombreBaseDeDatos: "PendingsList1",
     gmaina: "1234"
