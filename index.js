@@ -42,7 +42,7 @@ btnAgregar$.addEventListener("click", function(){
     
     //config.push(toDoListinDB, datos)
     for(let i=0; i<100; i++){
-        actualizar();
+        actualizar(datos);
     }
 
   
@@ -50,7 +50,7 @@ btnAgregar$.addEventListener("click", function(){
     limpiarCampos()
 })
 
-async function actualizar(){
+async function actualizar(datos){
     await config.push(toDoListinDB, datos)
 }
 
