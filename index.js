@@ -1,194 +1,219 @@
-import config from '../config.js'
+import config from "./config.js"
 
-let activeUser=""
+const navbarNav$ = document.getElementById("navbarNav")
+const pulsadorLogin$ = document.getElementById("pulsadorLogin")
+const pulsadorAviso$ = document.getElementById("pulsadorAviso")
+const pulsadorOrdenes$ = document.getElementById("pulsadorOrdenes")
+const pulsadorHistorico$ = document.getElementById("pulsadorHistorico")
+const pulsadorKPI$ = document.getElementById("pulsadorKPI")
 
-const appSetting = {
-    databaseURL: config.databaseURL
-}
-const app = config.initializeApp(appSetting)
-const database = config.getDatabase(app) 
+const loginScreen$ = document.getElementById("loginScreen")
+const avisoScreen$ = document.getElementById("avisoScreen")
+const ordenesScreen$ = document.getElementById("ordenesScreen")
+const historicoScreen$ = document.getElementById("historicoScreen")
+const kpiScreen$ = document.getElementById("kpiScreen")
+
+const ut$ = document.getElementById("ut")
+const especialidad$ = document.getElementById("especialidad")
+const tipo$ = document.getElementById("tipo")
+const repetitividad$ = document.getElementById("repetitividad")
+const fecha_fin$ = document.getElementById("fecha_fin")
+const detalle$ = document.getElementById("detalle")
+const fecha_solucion$ = document.getElementById("fecha_solucion")
+const btnAgregar$ = document.getElementById("btnAgregar")
+
+const filasTabla$ = document.getElementById("filasTabla")
+
+const app = config.initializeApp(config.firebaseConfig)
+const database = config.getDatabase(app)
 const toDoListinDB = config.ref(database, `${config.nombreBaseDeDatos}`)
 
-const btnAgregar$ = document.getElementById("btnAgregar")
-const btnCancelar$ = document.getElementById("btnCancelar")
-const ut$ = document.getElementById("ut") 
-const tipo$ = document.getElementById("tipo") 
-const detalle$ = document.getElementById("detalle") 
-const fecha$ = document.getElementById("fecha")
-const btnpass$ = document.getElementById("btnPass")
-const user$ = document.getElementById("user")
-const pass$ = document.getElementById("pass")
-const modalLogin$ = document.getElementById("modalLogin")
-const especialidad$ = document.getElementById("especialidad")
-const repetitividad$ = document.getElementById("repetitividad")
-const labelRepetitividad$ = document.getElementById("labelRepetitividad")
-const usuarioActivo$ = document.getElementById("usuarioActivo")
-// const fecha_inicio$ = document.getElementById("fecha_inicio")
-const labelFechaFin$ = document.getElementById("labelFechaFin")
-const fecha_fin$ = document.getElementById("fecha_fin")
+let datosInDB;
 
-
-tipo$.addEventListener("change", function(){
-    if(tipo$.value=="PREVENTIVO") 
-    {
-        labelRepetitividad$.classList.remove(['tachar'])
-        repetitividad$.removeAttribute('disabled')
-        labelFechaFin$.classList.remove(['tachar'])
-        fecha_fin$.removeAttribute('disabled')
-    }
-        else{
-        repetitividad$.value = "CORRECTIVO"
-        labelRepetitividad$.classList.add(['tachar'])
-        repetitividad$.setAttribute('disabled', 'disabled')
-        labelFechaFin$.classList.add(['tachar'])
-        fecha_fin$.setAttribute('disabled', 'disabled')
-} 
+config.onValue(toDoListinDB, (snapshot) => {
+    if (snapshot.exists()) {
+        datosInDB = Object.entries(snapshot.val())
+        console.log(datosInDB)
         
-})
-
-btnAgregar$.addEventListener("click", function(){
-
-    const fechaActual = new Date(); 
-    const dia = fechaActual.getDate(); 
-    const mes = fechaActual.getMonth() + 1;  
-    const anio = fechaActual.getFullYear(); 
-    const fechaFormateada = `${anio}-${mes}-${dia}`    
-
-    let datos = {
-        "UT": ut$.value,
-        "TIPO": tipo$.value,
-        "DETALLE": detalle$.value.toUpperCase(),
-        "FECHA_SOLICITADA": fecha$.value,
-        "FECHA_GENERADA": fechaFormateada,
-        "ESTADO": "SIN TRATAMIENTO", //hace referecia a si esta sin tratamiento, asignada o cerrada
-        "PLANIFICADOR": "", //hace referencia al jefe de turno que asigna la tarea
-        "COMENTARIOS_PLANIFICADOR": "",
-        "FECHA_PLANIFICADOR": "",
-        "ASIGNADO": "",
-        "COMENTARIOS_ASIGNADO":"",
-        "FECHA_ASIGNADO":"", //HACE REFERENCIA A LA FECHA DE CIERRE
-        "ID": Date.now(),
-        "USUARIO_GENERADOR": activeUser,
-        "ESPECIALIDAD": especialidad$.value,
-        "REPETITIVIDAD": {}
-    }
-
-    if(ut$.value !="" && especialidad$.value !="" && tipo$.value !="" && detalle$.value !="" && fecha$.value !=""){
-        if(tipo$.value === "CORRECTIVO"){
-            datos.REPETITIVIDAD = {
-                "FRECUENCIA":"",
-                "FECHA_INICIO": "",
-                "FECHA_FIN": ""
-            }
+        filasTabla$.innerHTML = ""
+        for(let i=0; i<datosInDB.length;i++){
+            let tr = document.createElement("tr")
+            let th_ut = document.createElement("th")
+            th_ut.textContent = datosInDB[i][1].ut
+            tr.appendChild(th_ut)
+            let th_esp = document.createElement("th")
+            th_esp.textContent = datosInDB[i][1].especialidad
+            tr.appendChild(th_esp)
+            let th_tipo = document.createElement("th")
+            th_tipo.textContent = datosInDB[i][1].tipo
+            tr.appendChild(th_tipo)
+            let th_fecha = document.createElement("th")
+            th_fecha.textContent = datosInDB[i][1].fecha
+            tr.appendChild(th_fecha)
+            let th_detalle = document.createElement("th")
+            th_detalle.textContent = datosInDB[i][1].detalle
+            th_detalle.classList.add("d-none", "d-md-table-cell")
+            tr.appendChild(th_detalle)
+            tr.classList.add("celeste")
+            filasTabla$.appendChild(tr)
+            
         }
-        else
-            {
-                if(repetitividad$.value != ""){
-                switch (repetitividad$.value) {
-                    case "SEMANAL": datos.REPETITIVIDAD = {
-                        "FRECUENCIA": "SEMANAL"
-                    }                        
-                    break;
-                    
-                    case "QUINCENAL": datos.REPETITIVIDAD = {
-                        "FRECUENCIA": "QUINCENAL"
-                    }
-                    break;
-
-                    case "MENSUAL": datos.REPETITIVIDAD = {
-                        "FRECUENCIA": "MENSUAL"
-                    }
-                    break
-
-                    case "TRIMESTRAL": datos.REPETITIVIDAD = {
-                        "FRECUENCIA": "TRIMESTRAL"
-                    }
-                    break
-
-                    case "SEMESTRAL": datos.REPETITIVIDAD = {
-                        "FRECUENCIA": "SEMESTRAL"
-                    }
-                    break
-
-                    case "ANUAL": datos.REPETITIVIDAD = {
-                        "FRECUENCIA": "ANUAL"
-                    }
-                    break
-
-                    default:
-                        break;
-                }
-
-            }
-        }
-        config.push(toDoListinDB, datos)
-        
-        limpiarCampos()
     }
 })
 
-btnCancelar$.addEventListener("click", ()=>{
-    // window.close()
-    let toDoListinDBelemento = config.ref(database, `${config.nombreBaseDeDatos}/-ODmZSMuK2SzI14K-wOd`)
-
-// Datos que deseas actualizar
-const updates = {
-  ASIGNADO: "Juan Perez",
-  COMENTARIOS_ASIGNADO: "Revisar urgentemente"
-};
-
-// Actualiza los datos
-config.update(toDoListinDBelemento, updates)
-  .then(() => {
-    console.log("Datos actualizados correctamente.");
-  })
-  .catch((error) => {
-    console.error("Error al actualizar los datos: ", error);
-  });
+btnAgregar$.addEventListener('click', ()=>{
+    let data = {
+        "ut": ut$.value,
+        "especialidad": especialidad$.value,
+        "tipo": tipo$.value,
+        "detalle": detalle$.value
+    }
+    config.agregar(data)
 })
 
-btnpass$.addEventListener('click', ()=>{
-    if(config.usuarios[`${user$.value}`]){
-        if(config.usuarios[`${user$.value}`].password === pass$.value){
-            console.log(config.usuarios[`${user$.value}`])
-            activeUser=user$.value;
-            usuarioActivo$.innerHTML = `USUARI@: ${activeUser} - PERFIL DE ACCESO: ${config.usuarios[`${user$.value}`].rol.toUpperCase()} `
-            modalLogin$.classList.add("noActive")
-        }else{
-            user$.value=""
-            pass$.value=""
-        }
-    }
-    else{
-        user$.value=""
-        pass$.value=""
-    }
+pulsadorLogin$.addEventListener('click', ()=>{
+    navbarNav$.classList.remove("show")
+    pulsadorLogin$.classList.add("active")
+    pulsadorAviso$.classList.remove("active")
+    pulsadorOrdenes$.classList.remove("active")
+    pulsadorHistorico$.classList.remove("active")
+    pulsadorKPI$.classList.remove("active")
+
+    loginScreen$.classList.add('cuadroActivo')
+    loginScreen$.classList.remove('cuadroInactivo')
+
+    avisoScreen$.classList.remove('cuadroActivo')
+    avisoScreen$.classList.add('cuadroInactivo')
     
-    
+    ordenesScreen$.classList.remove('cuadroActivo')
+    ordenesScreen$.classList.add('cuadroInactivo')
 
+    historicoScreen$.classList.remove('cuadroActivo')
+    historicoScreen$.classList.add('cuadroInactivo')
 
-
+    kpiScreen$.classList.remove('cuadroActivo')
+    kpiScreen$.classList.add('cuadroInactivo')
 
 })
 
-function limpiarCampos() {
-    ut$.value=""
-    tipo$.value=""
-    detalle$.value=""
-    fecha$.value="";
-    especialidad$.value=""
-    repetitividad$.value=""
-}
+pulsadorAviso$.addEventListener('click', ()=>{
+    navbarNav$.classList.remove("show")
+    pulsadorLogin$.classList.remove("active")
+    pulsadorAviso$.classList.add("active")
+    pulsadorOrdenes$.classList.remove("active")
+    pulsadorHistorico$.classList.remove("active")
+    pulsadorKPI$.classList.remove("active")
 
-config.onValue(toDoListinDB, function(snapshot){
-    if(snapshot.exists()){
-        let datosInDB = Object.entries(snapshot.val())    
-        console.log(datosInDB)    
-        // pendings$.innerHTML = ""    
-        // for(let i=0; i<datosInDB.length; i++){
-        //     console.log(datosInDB[i][1].detalle)
-        //     addItemToList(datosInDB[i][1].detalle)
-        // }
-    }
-    // else pendings$.innerHTML = "No hay elementos pendientes..."
-    })
+    loginScreen$.classList.remove('cuadroActivo')
+    loginScreen$.classList.add('cuadroInactivo')
+
+    avisoScreen$.classList.add('cuadroActivo')
+    avisoScreen$.classList.remove('cuadroInactivo')
+    
+    ordenesScreen$.classList.remove('cuadroActivo')
+    ordenesScreen$.classList.add('cuadroInactivo')
+
+    historicoScreen$.classList.remove('cuadroActivo')
+    historicoScreen$.classList.add('cuadroInactivo')
+
+    kpiScreen$.classList.remove('cuadroActivo')
+    kpiScreen$.classList.add('cuadroInactivo')
+})
+
+pulsadorOrdenes$.addEventListener('click', ()=>{
+    navbarNav$.classList.remove("show")
+    pulsadorLogin$.classList.remove("active")
+    pulsadorAviso$.classList.remove("active")
+    pulsadorOrdenes$.classList.add("active")
+    pulsadorHistorico$.classList.remove("active")
+    pulsadorKPI$.classList.remove("active")
+
+    loginScreen$.classList.remove('cuadroActivo')
+    loginScreen$.classList.add('cuadroInactivo')
+
+    avisoScreen$.classList.remove('cuadroActivo')
+    avisoScreen$.classList.add('cuadroInactivo')
+    
+    ordenesScreen$.classList.add('cuadroActivo')
+    ordenesScreen$.classList.remove('cuadroInactivo')
+
+    historicoScreen$.classList.remove('cuadroActivo')
+    historicoScreen$.classList.add('cuadroInactivo')
+
+    kpiScreen$.classList.remove('cuadroActivo')
+    kpiScreen$.classList.add('cuadroInactivo')
+})
+
+pulsadorHistorico$.addEventListener('click', ()=>{
+    navbarNav$.classList.remove("show")
+    pulsadorLogin$.classList.remove("active")
+    pulsadorAviso$.classList.remove("active")
+    pulsadorOrdenes$.classList.remove("active")
+    pulsadorHistorico$.classList.add("active")
+    pulsadorKPI$.classList.remove("active")
+
+    loginScreen$.classList.remove('cuadroActivo')
+    loginScreen$.classList.add('cuadroInactivo')
+
+    avisoScreen$.classList.remove('cuadroActivo')
+    avisoScreen$.classList.add('cuadroInactivo')
+    
+    ordenesScreen$.classList.remove('cuadroActivo')
+    ordenesScreen$.classList.add('cuadroInactivo')
+
+    historicoScreen$.classList.add('cuadroActivo')
+    historicoScreen$.classList.remove('cuadroInactivo')
+
+    kpiScreen$.classList.remove('cuadroActivo')
+    kpiScreen$.classList.add('cuadroInactivo')
+})
+
+pulsadorKPI$.addEventListener('click', ()=>{
+    navbarNav$.classList.remove("show")
+    pulsadorLogin$.classList.remove("active")
+    pulsadorAviso$.classList.remove("active")
+    pulsadorOrdenes$.classList.remove("active")
+    pulsadorHistorico$.classList.remove("active")
+    pulsadorKPI$.classList.add("active")
+
+    loginScreen$.classList.remove('cuadroActivo')
+    loginScreen$.classList.add('cuadroInactivo')
+
+    avisoScreen$.classList.remove('cuadroActivo')
+    avisoScreen$.classList.add('cuadroInactivo')
+    
+    ordenesScreen$.classList.remove('cuadroActivo')
+    ordenesScreen$.classList.add('cuadroInactivo')
+
+    historicoScreen$.classList.remove('cuadroActivo')
+    historicoScreen$.classList.add('cuadroInactivo')
+
+    kpiScreen$.classList.add('cuadroActivo')
+    kpiScreen$.classList.remove('cuadroInactivo')
+})
+
+
+// config.agregar("Termito")
+// config.actualizar("-ODrF8utbcgX8cOV_BEx")
+// config.eliminar("-ODrF8utbcgX8cOV_BEx")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
